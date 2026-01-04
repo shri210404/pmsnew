@@ -1,0 +1,29 @@
+<div class="login-container">
+  <div class="login-box">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <h2>Sign In</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Your Email Address</mat-label>
+        <input matInput formControlName="email" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required>
+      </mat-form-field>
+
+      <div class="options">
+        <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+        <a class="forgot-password" (click)="forgetPassword($event)" >Forgot Your Password?</a>
+      </div>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" class="sign-in-button" type="submit">Sign In</button>
+        <button mat-raised-button color="primary" class="register-button" type="button" (click)="register()">Register</button>
+      </div>
+    </form>
+    <p>Thank you and enjoy  Application.<br><strong>Praveen Bhagat</strong></p>
+    <strong>Build:{{version}}</strong>
+  </div>
+</div>

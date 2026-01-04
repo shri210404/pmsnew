@@ -1,0 +1,259 @@
+<div class="form-container">
+  <h6>My Reports Management</h6>
+  <form [formGroup]="myReportsForm">
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Submission Date From</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dateFromPicker"
+          formControlName="dateFrom"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dateFromPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Submission Date To</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dateToPicker"
+          formControlName="dateTo"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dateToPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #dateToPicker></mat-datepicker>
+      </mat-form-field>
+
+      <ng-container>
+        <mat-form-field>
+          <mat-label>Submitted By</mat-label>
+          <mat-select formControlName="recruiter" multiple [disabled]="true">
+            <mat-option
+              *ngFor="let recruiter of recruiters"
+              [value]="recruiter"
+              >{{ recruiter }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of status" [value]="status.value">{{
+            status.display
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Selection Date From</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker3"
+          formControlName="selectionDateFrom"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker3"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Selection Date To</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker4"
+          formControlName="selectionDateTo"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker4"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Client</mat-label>
+        <mat-select formControlName="client">
+          <mat-option *ngFor="let client of clients" [value]="client">{{
+            client
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let location of locations" [value]="location">{{
+            location
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Joining Date From</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker5"
+          formControlName="joiningDateFrom"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker5"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker5></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Joining Date To</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker6"
+          formControlName="joiningDateTo"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker6"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker6></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Profile Id</mat-label>
+        <input matInput formControlName="profileId" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Candidate Name</mat-label>
+        <input matInput formControlName="candidateName" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email Id</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row button-group">
+      <!-- Email Select and Send Mail Button -->
+      <mat-form-field class="email-select">
+        <mat-label>Select Mail Id</mat-label>
+        <mat-select multiple formControlName="emailSend" [value]="selectedOrder">
+          <mat-option *ngFor="let report of reportsToList" 
+                      [value]="report.username"
+                      (onSelectionChange)="toggleSelection(report)">
+            {{ report.email }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+      <button mat-raised-button color="accent" type="button" 
+              (click)="sendEmailToSelectedMail()" [disabled]="isSendingEmail" class="action-button">
+        <span *ngIf="!isSendingEmail">Send Mail</span>
+        <span *ngIf="isSendingEmail">
+          <mat-spinner diameter="20" class="spinner"></mat-spinner>
+          Sending...
+        </span>
+      </button>
+    
+      <!-- Other Action Buttons -->
+      <button mat-raised-button type="button" color="accent" 
+              (click)="exportToExcel()" class="action-button">
+        Export to Excel
+      </button>
+      
+      <button mat-raised-button color="primary" type="submit" 
+              (click)="onSubmit()" class="action-button">
+        SEARCH
+      </button>
+      
+      <button mat-raised-button color="accent-reset" type="button" 
+              (click)="reset()" class="action-button">
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Profile ID Column -->
+    <ng-container matColumnDef="profileId">
+      <th mat-header-cell *matHeaderCellDef>Profile Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.profileId }}</td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.candidateName }}</td>
+    </ng-container>
+  
+    <!-- Client Column -->
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef>Client</th>
+      <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
+    </ng-container>
+  
+    <!-- Salary Column -->
+    <ng-container matColumnDef="salary">
+      <th mat-header-cell *matHeaderCellDef>Salary</th>
+      <td mat-cell *matCellDef="let element">{{ element.currentSalary }}</td>
+    </ng-container>
+  
+    <!-- Location Column -->
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef>Location</th>
+      <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+    </ng-container>
+  
+    <!-- Role Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Role</th>
+      <td mat-cell *matCellDef="let element">{{ element.roleApplied }}</td>
+    </ng-container>
+  
+    <!-- Submission Date Column -->
+    <ng-container matColumnDef="submissionDate">
+      <th mat-header-cell *matHeaderCellDef>Submission Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdAt | date : "mediumDate" }}
+      </td>
+    </ng-container>
+  
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.submittedStatus === 'DROPPED_INTERNAL' ? 'DROPPED_CANDIDATE' : element.submittedStatus }}
+    </ng-container>
+  
+    <!-- Submitted By Column -->
+    <ng-container matColumnDef="submittedBy">
+      <th mat-header-cell *matHeaderCellDef>Submitted By</th>
+      <td mat-cell *matCellDef="let element">{{ element.createdByName }}</td>
+    </ng-container>
+  
+    <!-- Header and Row Definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  
+  <!-- Paginator -->
+  <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+ 
+</div>

@@ -1,0 +1,38 @@
+.proposal-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: calc(100% - 80px); /* Adjusting for scrollable content */
+  overflow-y: auto; /* Scrollable form */
+  padding: 20px; /* Add padding around the form */
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Add space between form items */
+}
+
+.form-item {
+  flex: 1 1 calc(33.333% - 20px); /* 3 items per row */
+  margin-bottom: 10px; /* Add space below each form item */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  padding-right: 20px; /* Ensure the buttons have padding on the right */
+}
+
+/* Force modal size */
+::ng-deep .mat-dialog-container {
+  padding: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+}

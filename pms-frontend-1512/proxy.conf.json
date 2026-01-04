@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+{
+  "/api": {
+    "target": "http://localhost:3005",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
+
+
+=======
+{
+  "/api": {
+    "target": "http://localhost:3005",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
+
+
+>>>>>>> 50b2106783da571ff78e8854e3aa536a4bb99f11

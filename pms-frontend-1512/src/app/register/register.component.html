@@ -1,0 +1,70 @@
+<div class="register-container">
+  <img src="assets/logo.png" alt="Logo" class="logo" />
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h6>Sign up. It is fast and easy.</h6>
+
+    <!-- Username field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Choose Username</mat-label>
+      <input matInput formControlName="username" placeholder="Choose Username" />
+      <mat-error *ngIf="f['username'].touched && f['username'].errors?.['required']">Username is required</mat-error>
+    </mat-form-field>
+
+    <!-- Name field -->
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" placeholder="First Name" />
+      <mat-error *ngIf="f['firstName'].touched && f['firstName'].errors?.['required']">First Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Last Name" />
+      <mat-error *ngIf="f['lastName'].touched && f['lastName'].errors?.['required']">Last Name is required</mat-error>
+    </mat-form-field>
+
+    <!-- Email field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Your Email Address</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Your Email Address" />
+      <mat-error *ngIf="f['email'].touched && f['email'].errors?.['email']">Please enter a valid email address</mat-error>
+      <mat-error *ngIf="f['email'].touched && f['email'].errors?.['invalidDomain']">Email must be from the mps.com domain</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Choose Password</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Choose Password" />
+      <mat-error *ngIf="f['password'].touched && f['password'].errors?.['required']">Password is required</mat-error>
+      <mat-error *ngIf="f['password'].touched && f['password'].errors?.['minlength']">Password must be at least 6 characters long, 1 uppercase, 1 lowercase, and 1 number.</mat-error>
+    </mat-form-field>
+
+    <!-- Confirm Password field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password" />
+      <mat-error *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors?.['required']">Confirm Password is required</mat-error>
+      <mat-error *ngIf="f['confirmPassword'].touched && !passwordsMatch()">Passwords do not match</mat-error>
+    </mat-form-field>
+
+    <!-- Terms and conditions checkbox -->
+    <mat-checkbox formControlName="acceptTerms">
+      I read and accept <a href="#">Terms & Conditions</a>.
+    </mat-checkbox>
+    <mat-error *ngIf="f['acceptTerms'].touched && f['acceptTerms'].errors?.['requiredTrue']">You must accept the terms</mat-error>
+
+    <!-- Sign up button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">
+      Sign Up Now
+    </button>
+
+    <!-- Sign in link -->
+    <p class="sign-in-link">
+      Already have an account? 
+      <a (click)="login()" class="login-link">Sign In</a>
+    </p>
+
+    <!-- Footer text -->
+    <p>Thank you and enjoy Application.<br /><b>Praveen Bhagat</b></p>
+  </form>
+</div>

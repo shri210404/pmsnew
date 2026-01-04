@@ -1,0 +1,47 @@
+.sidenav-container {
+    height: 100vh; // Use viewport height for full height
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav {
+    width: 20%; // Default width as a percentage of the parent container
+    transition: width 0.3s ease; // Smooth transition for opening/closing
+
+    &.mat-drawer-opened {
+        width: 15%; // Increase width when opened
+    }
+
+    &.mat-drawer-closed {
+        width: 5%; // Reduce width when closed
+    }
+}
+
+// Responsive adjustments using media queries
+@media (max-width: 768px) {
+    .sidenav {
+        width: 30%; // Adjust width for smaller screens
+
+        &.mat-drawer-opened {
+            width: 50%; // Increase width when opened on smaller screens
+        }
+
+        &.mat-drawer-closed {
+            width: 10%; // Reduce width when closed on smaller screens
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .sidenav {
+        width: 40%; // Adjust width for very small screens
+
+        &.mat-drawer-opened {
+            width: 70%; // Increase width when opened on very small screens
+        }
+
+        &.mat-drawer-closed {
+            width: 15%; // Reduce width when closed on very small screens
+        }
+    }
+}

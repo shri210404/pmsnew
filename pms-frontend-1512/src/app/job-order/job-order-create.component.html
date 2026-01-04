@@ -1,0 +1,361 @@
+<div class="form-container">
+  <h5>{{ mode === 'create' ? 'Create Job Order' : mode === 'edit' ? 'Edit Job Order' : 'View Job Order' }}</h5>
+  
+  <!-- Candidate Statistics Section (View Mode Only) -->
+  <div class="statistics-section" *ngIf="mode === 'view'">
+    <p>Candidate Statistics</p>
+    <div class="stats-container" *ngIf="!isLoadingStats && candidateStats">
+      <div class="stat-card">
+        <div class="stat-label">Candidates Submitted</div>
+        <div class="stat-value">{{ candidateStats.submitted }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Candidates Proposed</div>
+        <div class="stat-value">{{ candidateStats.proposed }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Candidates Selected</div>
+        <div class="stat-value">{{ candidateStats.selected }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Candidates Joined</div>
+        <div class="stat-value">{{ candidateStats.joined }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Candidates Rejected</div>
+        <div class="stat-value">{{ candidateStats.rejected }}</div>
+      </div>
+    </div>
+    <div *ngIf="isLoadingStats" class="loading-stats">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Loading statistics...</span>
+    </div>
+  </div>
+
+  <form class="submit-form" [formGroup]="jobOrderForm">
+    <!-- Job Information Section -->
+    <div class="profile-details-section">
+      <p>Job Information</p>
+      
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Job ID</mat-label>
+          <input matInput formControlName="jobId" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Search Client</mat-label>
+          <input matInput [value]="clientSearchTerm" #clientSearch (input)="onClientSearch(clientSearch.value)" />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Client Name *</mat-label>
+          <mat-select formControlName="clientName">
+            <mat-option *ngFor="let client of filteredClients" [value]="client.clientName">
+              {{ client.clientName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('clientName')?.hasError('required')">
+            Client Name is required
+          </mat-error>
+          <div style="text-align: right; margin-top: 4px;">
+            <a [routerLink]="['/app/add-client']">Add</a>
+          </div>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Client Type (IT/BPO) *</mat-label>
+          <mat-select formControlName="clientType">
+            <mat-option *ngFor="let type of clientTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('clientType')?.hasError('required')">
+            Client Type is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Job Title *</mat-label>
+          <input matInput formControlName="jobTitle" />
+          <mat-error *ngIf="jobOrderForm.get('jobTitle')?.hasError('required')">
+            Job Title is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" style="flex: 1 1 100%;">
+          <mat-label>Job Description Summary *</mat-label>
+          <textarea matInput formControlName="jobDescriptionSummary" rows="3"></textarea>
+          <mat-error *ngIf="jobOrderForm.get('jobDescriptionSummary')?.hasError('required')">
+            Job Description Summary is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Work Location Country *</mat-label>
+          <mat-select formControlName="workLocationCountry">
+            <mat-option *ngFor="let location of locations" [value]="location.countryName">
+              {{ location.countryName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('workLocationCountry')?.hasError('required')">
+            Work Location Country is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Remote/Hybrid/Onsite *</mat-label>
+          <mat-select formControlName="remoteHybridOnsite">
+            <mat-option *ngFor="let type of workTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('remoteHybridOnsite')?.hasError('required')">
+            Work Type is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Job Start Date *</mat-label>
+          <input matInput [matDatepicker]="startPicker" formControlName="jobStartDate" />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+          <mat-error *ngIf="jobOrderForm.get('jobStartDate')?.hasError('required')">
+            Job Start Date is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Job End Date *</mat-label>
+          <input matInput [matDatepicker]="endPicker" formControlName="jobEndDate" />
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+          <mat-error *ngIf="jobOrderForm.get('jobEndDate')?.hasError('required')">
+            Job End Date is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Contract Type (Permanent/Contract) *</mat-label>
+          <mat-select formControlName="contractType">
+            <mat-option *ngFor="let type of contractTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('contractType')?.hasError('required')">
+            Contract Type is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>No. of Positions *</mat-label>
+          <input matInput type="number" formControlName="numberOfPositions" min="1" />
+          <mat-error *ngIf="jobOrderForm.get('numberOfPositions')?.hasError('required')">
+            Number of Positions is required
+          </mat-error>
+          <mat-error *ngIf="jobOrderForm.get('numberOfPositions')?.hasError('min')">
+            Must be at least 1
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" style="flex: 1 1 100%;">
+          <mat-label>Required Skills</mat-label>
+          <textarea matInput formControlName="requiredSkills" rows="2"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Years of Experience</mat-label>
+          <input matInput type="number" formControlName="yearsOfExperience" />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Min Educational Qualification Required</mat-label>
+          <input matInput formControlName="minEducationalQualification" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Salary/CTC Range *</mat-label>
+          <input matInput formControlName="salaryCtcRange" />
+          <mat-error *ngIf="jobOrderForm.get('salaryCtcRange')?.hasError('required')">
+            Salary/CTC Range is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Shift (Yes/No)</mat-label>
+          <mat-select formControlName="shift">
+            <mat-option *ngFor="let option of shiftOptions" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Shift Timing</mat-label>
+          <input matInput formControlName="shiftTiming" />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Language Requirement</mat-label>
+          <mat-select formControlName="languageRequirement" multiple>
+            <mat-option *ngFor="let language of languages" [value]="language.languageName">
+              {{ language.languageName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Language Proficiency Level</mat-label>
+          <input matInput formControlName="languageProficiencyLevel" />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Nationality Preference</mat-label>
+          <mat-select formControlName="nationalityPreference" multiple>
+            <mat-option *ngFor="let location of locations" [value]="location.countryName">
+              {{ location.countryName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Visa/Work Permit Provided for Expat</mat-label>
+          <mat-select formControlName="visaWorkPermitProvided">
+            <mat-option *ngFor="let option of visaOptions" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Client SPOC Name *</mat-label>
+          <input matInput formControlName="clientSpocName" />
+          <mat-error *ngIf="jobOrderForm.get('clientSpocName')?.hasError('required')">
+            Client SPOC Name is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Internal Recruiter Assigned</mat-label>
+          <mat-select formControlName="internalRecruiterAssigned" multiple>
+            <mat-option *ngFor="let employee of employees" [value]="employee.firstName + ' ' + employee.lastName">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </mat-option>
+          </mat-select>
+          <div style="text-align: right; margin-top: 4px;">
+            <a [routerLink]="['/app/add-employee']">Add</a>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Job Owner *</mat-label>
+          <mat-select formControlName="jobOwner">
+            <mat-option *ngFor="let employee of employees" [value]="employee.firstName + ' ' + employee.lastName">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('jobOwner')?.hasError('required')">
+            Job Owner is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field">
+          <mat-label>Delivery Lead *</mat-label>
+          <mat-select formControlName="deliveryLead">
+            <mat-option *ngFor="let employee of employees" [value]="employee.firstName + ' ' + employee.lastName">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('deliveryLead')?.hasError('required')">
+            Delivery Lead is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Status *</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="jobOrderForm.get('status')?.hasError('required')">
+            Status is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Remarks and Attachment Section -->
+    <div class="remarks-section">
+      <p>Remarks and Attachment</p>
+      
+      <div class="form-row">
+        <mat-form-field class="form-field" style="flex: 1 1 100%;">
+          <mat-label>Remarks/Notes</mat-label>
+          <textarea matInput formControlName="remarksNotes" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="attachment-field">
+          <mat-form-field class="form-field">
+            <mat-label>Detailed JD Attachment *</mat-label>
+            <input matInput [value]="attachmentFileName || 'No file selected'" disabled />
+          </mat-form-field>
+          <input type="file" (change)="onFileChange($event)" accept=".pdf,.doc,.docx" [disabled]="mode === 'view'" />
+          
+          <a *ngIf="attachmentUrl" [href]="attachmentUrl" target="_blank" style="margin-left: 12px;">
+            View Attachment
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button
+        *ngIf="mode !== 'view'"
+        mat-raised-button
+        color="primary"
+        (click)="onSave()"
+        [disabled]="isSubmitting || jobOrderForm.invalid">
+        <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+        <span *ngIf="!isSubmitting">{{ mode === 'edit' ? 'UPDATE JOB ORDER' : 'CREATE JOB ORDER' }}</span>
+      </button>
+
+      <button
+        mat-button
+        color="accent"
+        (click)="onCancel()"
+        [disabled]="isSubmitting">
+        {{ mode === 'view' ? 'Back' : 'Cancel' }}
+      </button>
+    </div>
+  </form>
+</div>

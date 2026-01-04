@@ -1,0 +1,226 @@
+<div class="dashboard-content">
+  <div class="welcome-date-row">
+    <h6>Future Jobs - Submitted Profiles</h6>
+   
+  </div>
+  <form [formGroup]="submissionForm">
+    <!-- Row 1: Profile ID, Resume Submission From/To, Role -->
+    <div class="form-row">
+      <mat-form-field appearance="fill">
+        <mat-label>Profile ID</mat-label>
+        <input matInput formControlName="profileId" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>EMAIL ID</mat-label>
+        <input matInput formControlName="emailId" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Candidate Name </mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Willingness to Relocate</mat-label>
+        <mat-select formControlName="willingToRelocate">
+          <mat-option value="Yes">Yes</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <!-- <mat-form-field appearance="fill">
+        <mat-label>Resume Submission From</mat-label>
+        <input matInput [matDatepicker]="resumeFrom" formControlName="resumeSubmissionFrom" />
+        <mat-datepicker-toggle matSuffix [for]="resumeFrom"></mat-datepicker-toggle>
+        <mat-datepicker #resumeFrom></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Resume Submission To</mat-label>
+        <input matInput [matDatepicker]="resumeTo" formControlName="resumeSubmissionTo" />
+        <mat-datepicker-toggle matSuffix [for]="resumeTo"></mat-datepicker-toggle>
+        <mat-datepicker #resumeTo></mat-datepicker>
+      </mat-form-field> -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Current Job Role</mat-label>
+        <input matInput formControlName="currentJobRole" />
+      </mat-form-field>
+    </div>
+  
+    <!-- Row 2: Current Job Role, Profile for Client, Availability From/To -->
+    <div class="form-row">
+
+      <mat-form-field  class="form-field">
+        <mat-label>Job Language</mat-label>
+        <mat-select formControlName="jobLanguage">
+          <mat-option *ngFor="let lan of language" [value]="lan.languageName">
+            {{ lan.languageName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Profile for Client</mat-label>
+        <mat-select formControlName="profileForClient">
+          <mat-option *ngFor="let client of clients" [value]="client.clientName">
+            {{ client.clientName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Candidate Availability From</mat-label>
+        <input matInput [matDatepicker]="availFrom" formControlName="availabilityFrom" />
+        <mat-datepicker-toggle matSuffix [for]="availFrom"></mat-datepicker-toggle>
+        <mat-datepicker #availFrom></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Candidate Availability To</mat-label>
+        <input matInput [matDatepicker]="availTo" formControlName="availabilityTo" />
+        <mat-datepicker-toggle matSuffix [for]="availTo"></mat-datepicker-toggle>
+        <mat-datepicker #availTo></mat-datepicker>
+      </mat-form-field>
+    </div>
+  
+    <!-- Row 3: Nationality, Willingness to Relocate, Current Location, Native Language -->
+    <div class="form-row">
+
+      <mat-form-field  class="form-field">
+        <mat-label> Nationality</mat-label>
+        <mat-select formControlName="nationality">
+          <mat-option *ngFor="let location of locations" [value]="location.countryName">
+            {{ location.countryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+    
+
+      <mat-form-field  class="form-field">
+        <mat-label>Current Location</mat-label>
+        <mat-select formControlName="currentLocation">
+          <mat-option *ngFor="let location of locations" [value]="location.countryName">
+            {{ location.countryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Native Language</mat-label>
+        <mat-select formControlName="nativeLanguage">
+          <mat-option *ngFor="let lan of language" [value]="lan.languageName">
+            {{ lan.languageName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Submitted By</mat-label>
+        <mat-select formControlName="recruiter" multiple>
+          <mat-option *ngFor="let recruiter of recruiters" [value]="recruiter">{{ recruiter }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <!-- Row 4: Job Language, Submitted By -->
+      <div class="button-container">
+        <button mat-raised-button color="accent" (click)="openSubmitForm($event)">
+         Save Profile
+        </button>
+        <button mat-raised-button color="primary" (click)="searchRecords()">
+          SEARCH
+        </button>
+        <button mat-raised-button color="primary-reset" (click)="reset()">RESET</button>
+      </div>  
+  </form>
+  
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Profile Id -->
+    <ng-container matColumnDef="profileId">
+      <th mat-header-cell *matHeaderCellDef> Profile Id </th>
+      <td mat-cell *matCellDef="let element"> {{ element.profileId }} </td>
+    </ng-container>
+  
+    <!-- Name -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+    </ng-container>
+  
+    <!-- Role For -->
+    <ng-container matColumnDef="roleFor">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{ element.profileForJobRole }} </td>
+    </ng-container>
+  
+    <!-- Client For -->
+    <!-- <ng-container matColumnDef="clientFor">
+      <th mat-header-cell *matHeaderCellDef> Client  </th>
+      <td mat-cell *matCellDef="let element"> {{ element.profileForClient }} </td>
+    </ng-container> -->
+  
+    <!-- Native Language -->
+    <ng-container matColumnDef="nativeLanguage">
+      <th mat-header-cell *matHeaderCellDef> Native Language </th>
+      <td mat-cell *matCellDef="let element"> {{ element.nativeLanguage }} </td>
+    </ng-container>
+  
+    <!-- Job Language -->
+    <ng-container matColumnDef="jobLanguage">
+      <th mat-header-cell *matHeaderCellDef> Job Language </th>
+      <td mat-cell *matCellDef="let element"> {{ element.jobLanguage }} </td>
+    </ng-container>
+  
+    <!-- Date Update -->
+    <ng-container matColumnDef="dateUpdated">
+      <th mat-header-cell *matHeaderCellDef> Date Updated </th>
+      <td mat-cell *matCellDef="let element"> {{ (element?.lastUpdate ? element?.lastUpdate : element?.createdAt) | date }} </td>
+
+    </ng-container>
+  
+    <!-- Nationality -->
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell *matHeaderCellDef> Nationality </th>
+      <td mat-cell *matCellDef="let element"> {{ element.nationality }} </td>
+    </ng-container>
+  
+    <!-- Availability Date -->
+    <ng-container matColumnDef="availabilityDate">
+      <th mat-header-cell *matHeaderCellDef> Availability </th>
+      <td mat-cell *matCellDef="let element"> {{ element.availability}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="recruiter">
+      <th mat-header-cell *matHeaderCellDef> Submitted By </th>
+      <td mat-cell *matCellDef="let element"> {{ element.submittedBy}} </td>
+    </ng-container>
+  
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="onRowClick(element, 'view',$event)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onRowClick(element, 'edit',$event)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+  </table>
+  <mat-paginator
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+></mat-paginator>
+  
+  </div>

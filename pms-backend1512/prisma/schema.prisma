@@ -1,0 +1,301 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Token {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  user_id      String    @db.VarChar(36)
+  accesstoken  String    @db.Text
+  refreshtoken String    @db.VarChar(32)
+  parentTokenId String?  @db.VarChar(36) // For token family tracking
+  isRevoked    Boolean   @default(false) // Track if token was revoked (for reuse detection)
+  createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  revokedAt    DateTime? // When token was revoked (for reuse detection)
+}
+
+// Employee model
+model Employee {
+ id           String @id @default(uuid()) @db.VarChar(36)
+  name      String?
+  username  String   @unique
+  email     String   @unique
+  firstName String
+  lastName  String
+  employeeId String? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userRoles UserRole[]
+}
+
+// Role model
+model Role {
+ id             String @id @default(uuid()) @db.VarChar(36)
+  roleName      String
+  shortRoleName String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  userRoles     UserRole[]
+}
+
+// UserRole model
+model UserRole {
+  id        String @id @default(uuid()) @db.VarChar(36)
+  username  String   @unique
+  email     String?   @unique
+  roleId    String
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  reportsTo String
+  managerDetails   Employee @relation(fields: [reportsTo], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+}
+
+
+// Template model
+model Template {
+ id           String @id @default(uuid()) @db.VarChar(36)
+  templateName String
+  location    String
+  client      String
+  remarks     String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  createdBy   String
+  creator     User            @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  fields      TemplateField[]
+}
+
+// TemplateField model
+model TemplateField {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  fieldName       String
+  fieldType       String
+  formControlName String
+  templateId      String
+  template        Template   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+// Proposal model
+
+model Proposal {
+  id                      String          @id @default(uuid()) @db.VarChar(36)
+  profileId               String
+  clientName              String
+  location                String
+  remarks                 String?
+  candidateName           String
+  roleApplied             String
+  nationality             String?
+  email                   String          
+  contact                 String
+  noticePeriod            String?
+  passportValidity        DateTime?
+  currentSalary           Float?
+  primarySkills           String?
+  attachment              String
+  createdAt               DateTime @default(now()) @db.Timestamp(6)       
+  createdBy               User            @relation("CreatedProposals", fields: [createdById], references: [id])
+  updatedBy               User?           @relation("UpdatedProposals", fields: [updatedById], references: [id])
+  createdById             String
+  updatedById             String?
+  updatedAt               DateTime?
+  submittedStatus         ProposalStatus?
+  proposedTo              String
+
+  currentLocation         String?         
+  university              String?         
+  educationLevel          String?         
+  visaType                String?         
+  interviewAvailable      String?         
+  totalYearsExperience    Int?            
+  relevantYearsExperience Int?            
+  reasonForJobChange      String?         
+  passport                String?         
+  currentJobDetails       String?         
+  jobLanguage             String?         
+  proficiency             String?         
+  proficiencyEnglish      String?         
+  nativeLanguage          String?
+
+  salaryCurrency          String?
+  selectionDate           DateTime?
+  joiningDate             DateTime?
+  proposalDate            DateTime?
+  rejection_dropped_Date  DateTime?
+  billingCurrency         String?
+  invoiceDate             DateTime?
+  invoiceNo               String?         
+  billingNo               String?   
+  previousStatus          String?
+  jobOrderId              String?
+  jobOrder                JobOrder?       @relation(fields: [jobOrderId], references: [id])
+}
+
+model User {
+  id          String          @id @default(uuid()) @db.VarChar(36)
+  username    String          @unique
+  email       String          @unique
+  firstName   String
+  lastName    String
+  password    String
+  status      String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  userRoleId  String          
+  lastLogin   DateTime?
+  resetToken  String?         @db.VarChar(255)
+  resetTokenExpiry DateTime?
+  userRole    UserRole        @relation(fields: [userRoleId], references: [id], onDelete: Cascade)
+  templates   Template[]
+  proposalsCreated Proposal[] @relation("CreatedProposals")
+  proposalsUpdated Proposal[] @relation("UpdatedProposals")
+  clients     UserClient[]    // Many-to-many relation through the join table
+  jobOrdersCreated JobOrder[] @relation("CreatedJobOrders")
+  jobOrdersUpdated JobOrder[] @relation("UpdatedJobOrders")
+}
+
+
+// ProposalStatus Enum
+enum ProposalStatus {
+  PROPOSED
+  REJECTED_CLIENT
+  REJECTED_INTERNAL
+  IN_PROCESS
+  ROLE_HOLD
+  ROLE_CLOSED
+  SELECTED
+  SUBMITTED
+  JOINED
+  DROPPED_CLIENT
+  DROPPED_INTERNAL
+  PENDING_SUBMISSION
+}
+
+
+model Country {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  countryName String
+}
+
+model Language {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  languageName String
+}
+
+model currency {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  currencyName String
+}
+
+
+
+model Client {
+  id         String      @id @default(uuid()) @db.VarChar(36)
+  clientName String
+  users      UserClient[] // Many-to-many relation through the join table
+}
+
+model UserClient {
+  userId   String
+  clientId String
+
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@id([userId, clientId]) // Composite primary key for the join table
+}
+
+model FutureJobsProfile {
+  id                  String    @id @default(uuid()) @db.VarChar(36)
+  profileId           String    @unique
+  name                String
+  email               String
+  contact             String
+  jobSkill            String?       // Current job skill
+  jobRole             String?       // Current job role
+  location            String        // Current location
+  readyToRelocate     String?      // Ready to Relocate
+  nationality         String
+  nativeLanguage      String
+  jobLanguage         String
+  languageLevel       String
+  noticePeriod        String
+  salary              String        @db.VarChar(191)  // Current salary
+  salaryCurrency      String
+  profileForClient    String        // Profile fit for client
+  profileForJobRole   String        // Profile fit for Job role
+  jobOrderId          String?
+  jobOrder            JobOrder?     @relation(fields: [jobOrderId], references: [id])
+  currentCompany      String?
+  education           String?
+  totalYearOfExp      String?       @db.VarChar(191)
+  profileSource       String?
+  profileSourceLink   String?
+  availability        String?       // Corrected spelling
+  availabilityDate    DateTime?     // availibility Date
+  recruiterNotes      String?
+  resume              String?
+  submissionDate      DateTime?
+  submittedBy         String?       // Submitted By
+  lastUpdate          DateTime?     // Last update
+  createdById         String?
+  createdAt           DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime?
+  status              String?
+}
+
+model JobOrder {
+  id                        String    @id @default(uuid()) @db.VarChar(36)
+  jobId                     String    @unique
+  clientName                 String
+  clientType                 String
+  jobTitle                   String
+  jobDescriptionSummary      String   @db.Text
+  workLocationCountry         String
+  remoteHybridOnsite          String
+  jobStartDate               DateTime
+  jobEndDate                 DateTime
+  contractType               String
+  numberOfPositions           Int
+  requiredSkills             String?   @db.Text
+  yearsOfExperience          String?
+  minEducationalQualification String?
+  salaryCtcRange             String
+  shift                      String?
+  shiftTiming                String?
+  languageRequirement        String?
+  languageProficiencyLevel   String?
+  nationalityPreference      String?
+  visaWorkPermitProvided     String?
+  clientSpocName             String
+  internalRecruiterAssigned  String?
+  remarksNotes               String?   @db.Text
+  detailedJdAttachment       String?
+  jobOwner                   String
+  deliveryLead               String
+  status                     String   @default("Open")
+  createdAt                  DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt                  DateTime  @updatedAt
+  createdById                String
+  createdBy                  User     @relation("CreatedJobOrders", fields: [createdById], references: [id])
+  updatedById                String?
+  updatedBy                  User?     @relation("UpdatedJobOrders", fields: [updatedById], references: [id])
+  proposals                  Proposal[]
+  futureJobsProfiles         FutureJobsProfile[]
+}
+
+

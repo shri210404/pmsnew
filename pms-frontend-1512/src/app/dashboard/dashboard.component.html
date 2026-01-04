@@ -1,0 +1,79 @@
+<div class="dashboard-content">
+  <div class="welcome-date-row">
+    <h6>Welcome {{ accountDetails?.name }}</h6>
+    <span class="today-date">{{ todayDate | date:'fullDate' }}</span>
+  </div>
+  
+  <div class="dashboard-tiles-container">
+    <!-- Total Submission Tile -->
+    <div class="dashboard-tile">
+      <app-tiles
+        [title]="'Total Submission'"
+        [ico]="'home'"
+        [bgClass]="'bg-orange'"
+        [displayValue]="totalSubmission"
+      ></app-tiles>
+    </div>
+
+    <!-- Proposed Tile -->
+    <div class="dashboard-tile">
+      <app-tiles
+        [title]="'Proposed'"
+        [ico]="'assignment'"
+        [bgClass]="'bg-blue'"
+        [displayValue]="totalProposed"
+      ></app-tiles>
+    </div>
+
+    <!-- Selected Tile -->
+    <div class="dashboard-tile">
+      <app-tiles
+        [title]="'Selected'"
+        [ico]="'people'"
+        [bgClass]="'bg-maroon'"
+        [displayValue]="totalSelected"
+      ></app-tiles>
+    </div>
+
+    <!-- Submitted Tile -->
+    <div class="dashboard-tile">
+      <app-tiles
+        [title]="'Submitted'"
+        [ico]="'upload'"
+        [bgClass]="'bg-green'"
+        [displayValue]="totalSubmitted"
+      ></app-tiles>
+    </div>
+
+    <!-- Joined Tile -->
+    <div class="dashboard-tile padded">
+      <app-tiles
+        [title]="'Joined'"
+        [ico]="'person'"
+        [bgClass]="'bg-green'"
+        [displayValue]="totalJoined"
+      ></app-tiles>
+    </div>
+
+    <!-- Dropped Tile -->
+ <!-- Dropped Tile -->
+<div class="dashboard-tile padded">
+  <app-tiles
+    [title]="'Dropped'"
+    [ico]="'delete'"
+    [bgClass]="'bg-green'"
+    [activityFeed]="{ 'Drop-Candidate': this.totalDroppedInternal, 'Drop-Client': this.totalDroppedClient}"
+  ></app-tiles>
+</div>
+
+<!-- Rejected Tile -->
+<div class="dashboard-tile padded">
+  <app-tiles
+    [title]="'Rejected'"
+    [ico]="'reject'"
+    [bgClass]="'bg-green'"
+    [activityFeed]="{ 'Rejected-Internal ': this.totalRejectedInternal, 'Rejected-Client': this.totalRejectedClient}"
+  ></app-tiles>
+</div>
+  </div>
+</div>

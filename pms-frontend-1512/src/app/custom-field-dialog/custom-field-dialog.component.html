@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Custom Field</h2>
+<form [formGroup]="customFieldForm" (ngSubmit)="addCustomField()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Field Name</mat-label>
+      <input matInput formControlName="fieldName" required />
+      <mat-error *ngIf="customFieldForm.get('fieldName')?.hasError('required')">
+        Field Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Field Type</mat-label>
+      <mat-select formControlName="fieldType" required>
+        <mat-option *ngFor="let type of fieldTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="customFieldForm.get('fieldType')?.hasError('required')">
+        Field Type is required
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button color="primary" type="submit">Add</button>
+    <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+  </mat-dialog-actions>
+</form>

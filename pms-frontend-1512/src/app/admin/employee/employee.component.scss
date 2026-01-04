@@ -1,0 +1,95 @@
+.employee-form-container {
+  max-width: 1200px;
+  margin: 20px 5px;
+  
+}
+  h6 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50; // Dark blue for heading
+    margin-bottom: 24px;
+  }
+
+
+form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 fields per row
+  gap: 16px; // Spacing between fields
+  width: 100%; // Full width
+}
+
+mat-form-field {
+  width: 100%; // Each field takes full width of its grid cell
+  margin-bottom: 0; // Remove bottom margin since gap handles spacing
+  .mat-form-field-wrapper {
+      border-radius: 8px;
+      background: #f9f9f9;
+  }
+  .mat-form-field-outline {
+      border-radius: 8px;
+  }
+  .mat-input-element {
+      color: #333;
+  }
+}
+
+.button-container {
+  grid-column: span 3; // Buttons span all 3 columns
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  button {
+      border-radius: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      transition: background-color 0.3s ease;
+      &:hover {
+          opacity: 0.9;
+      }
+  }
+  button[color="primary"] {
+      background: linear-gradient(135deg, #fc6027, #fc6027);
+      color: white;
+  }
+  button[color="warn"] {
+      background: linear-gradient(135deg, #a0a0a0, #a0a0a0);
+      color: white;
+  }
+}
+
+table {
+  width: 100%;
+  margin-top: 24px;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  th {
+      background: #2c3e50;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      text-align: left;
+  }
+  td {
+      background: #f9f9f9;
+      padding: 12px;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+  }
+  tr:hover td {
+      background: #f1f1f1;
+  }
+  button.mat-icon-button {
+      color: #2575fc;
+      &:hover {
+          color: #6a11cb;
+      }
+  }
+}
+
+mat-paginator {
+  margin-top: 16px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

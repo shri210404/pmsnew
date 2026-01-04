@@ -1,0 +1,103 @@
+<mat-nav-list>
+  <!-- Dashboard -->
+  <a mat-list-item routerLink="/app/dashboard">
+    <mat-icon>dashboard</mat-icon>
+    <span>Dashboard</span>
+  </a>
+
+  <!-- Proposal -->
+  <a mat-list-item routerLink="/app/proposal">
+    <mat-icon>description</mat-icon>
+    <span>Proposal</span>
+  </a>
+
+  <!-- Job Order -->
+  <a mat-list-item routerLink="/app/job-order">
+    <mat-icon>work</mat-icon>
+    <span>Job Order</span>
+  </a>
+
+  <!-- Email Check -->
+  <a mat-list-item routerLink="/app/email-check">
+    <mat-icon>email</mat-icon>
+    <span>Email-Check</span>
+  </a>
+
+  <!-- Submission Management -->
+  <a mat-list-item routerLink="/app/submission">
+    <mat-icon>assignment_turned_in</mat-icon>
+    <span>Submission Management</span>
+  </a>
+
+  <!-- My Reports -->
+  <a mat-list-item routerLink="/app/reports">
+    <mat-icon>bar_chart</mat-icon>
+    <span>My Reports</span>
+  </a>
+
+  <a mat-list-item [routerLink]="'/app/future-jobs'">
+    <mat-icon matListIcon>description</mat-icon>
+    <span matLine>My Future Profiles</span>
+  </a>
+  
+  <!-- Admin Section with Expansion Panel -->
+  <div *ngIf="isAdminRole()">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-nav-list>
+        <!-- Add Employee -->
+        <a mat-list-item routerLink="/app/add-employee">
+          <mat-icon>person_add</mat-icon>
+          <span>Add Employee</span>
+        </a>
+
+        <!-- Set Roles -->
+        <a mat-list-item routerLink="/app/set-roles">
+          <mat-icon>settings</mat-icon>
+          <span>Set Roles</span>
+        </a>
+
+        <!-- Set User Roles -->
+        <a mat-list-item routerLink="/app/set-user-roles">
+          <mat-icon>people_alt</mat-icon>
+          <span>Set User Roles</span>
+        </a>
+
+        <!-- Add Country -->
+        <a mat-list-item routerLink="/app/add-country">
+          <mat-icon>public</mat-icon>
+          <span>Add Country</span>
+        </a>
+
+        <!-- Add Client -->
+        <a mat-list-item routerLink="/app/add-client">
+          <mat-icon>business</mat-icon>
+          <span>Add Client</span>
+        </a>
+
+        <!-- Add Currency -->
+        <a mat-list-item routerLink="/app/add-currency">
+          <mat-icon>attach_money</mat-icon>
+          <span>Add Currency</span>
+        </a>
+
+        <!-- Add Language -->
+        <a mat-list-item routerLink="/app/add-language">
+          <mat-icon>language</mat-icon>
+          <span>Add Language</span>
+        </a>
+
+        <!-- Add User Client -->
+        <a mat-list-item routerLink="/app/add-user-client">
+          <mat-icon>person</mat-icon>
+          <span>Add User Client</span>
+        </a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+  </div>
+</mat-nav-list>

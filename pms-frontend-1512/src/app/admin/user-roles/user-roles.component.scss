@@ -1,0 +1,232 @@
+.user-roles-form-container {
+  max-width: 1200px;
+  margin: 20px 5px;
+  
+
+  h6 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50; // Dark blue for heading
+    margin-bottom: 24px;
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2 fields per row
+    gap: 16px; // Spacing between fields
+    width: 100%; // Full width
+  }
+
+  mat-form-field {
+    width: 100%; // Each field takes full width of its grid cell
+    margin-bottom: 0; // Remove bottom margin since gap handles spacing
+
+    .mat-form-field-wrapper {
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    .mat-form-field-outline {
+      border-radius: 8px;
+    }
+
+    .mat-input-element {
+      color: #333;
+    }
+  }
+
+  .button-group {
+    grid-column: span 2; // Buttons span all 2 columns
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end; // Align buttons to the right
+
+    button {
+      border-radius: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    button[color="primary"] {
+      background: linear-gradient(135deg, #fc6027, #fc6027);
+      color: white;
+    }
+
+    button[color="warn"] {
+      background: linear-gradient(135deg, #a0a0a0, #a0a0a0);
+      color: white;
+    }
+  }
+
+  table {
+    width: 100%;
+    margin-top: 24px;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    th {
+      background: #2c3e50;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      background: #f9f9f9;
+      padding: 12px;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:hover td {
+      background: #f1f1f1;
+    }
+
+    button.mat-raised-button {
+      color: white;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  mat-paginator {
+    margin-top: 16px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1200px) {
+  .user-roles-form-container {
+    padding: 20px;
+
+    h6 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      gap: 12px; // Reduce gap between fields
+    }
+
+    .button-group {
+      gap: 10px; // Reduce gap between buttons
+    }
+
+    table {
+      th,
+      td {
+        padding: 10px; // Reduce padding for table cells
+      }
+    }
+
+    mat-paginator {
+      margin-top: 12px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .user-roles-form-container {
+    padding: 16px;
+
+    h6 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    form {
+      grid-template-columns: 1fr; // 1 field per row on smaller screens
+      gap: 12px;
+    }
+
+    .button-group {
+      grid-column: span 1; // Buttons span 1 column
+      flex-direction: column; // Stack buttons vertically
+      gap: 8px;
+    }
+
+    table {
+      th,
+      td {
+        padding: 8px; // Further reduce padding for table cells
+      }
+    }
+
+    mat-paginator {
+      margin-top: 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-roles-form-container {
+    padding: 12px;
+
+    h6 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    form {
+      gap: 8px; // Further reduce gap between fields
+    }
+
+    .button-group {
+      gap: 6px; // Further reduce gap between buttons
+    }
+
+    table {
+      th,
+      td {
+        padding: 6px; // Minimal padding for table cells
+      }
+    }
+
+    mat-paginator {
+      margin-top: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .user-roles-form-container {
+    padding: 8px;
+
+    h6 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    form {
+      gap: 6px; // Minimal gap between fields
+    }
+
+    .button-group {
+      gap: 4px; // Minimal gap between buttons
+    }
+
+    table {
+      th,
+      td {
+        padding: 4px; // Minimal padding for table cells
+      }
+    }
+
+    mat-paginator {
+      margin-top: 6px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="roles-container">
+  <h6>Client</h6>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Client Name</mat-label>
+    <input matInput placeholder="Enter Client Name" [(ngModel)]="clientName" />
+  </mat-form-field>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+  </div>
+
+  <h6>Client List</h6>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" editable>
+
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell *matHeaderCellDef> Client Name </th>
+      <td mat-cell *matCellDef="let client"> {{ client.clientName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let client">   
+        <button mat-raised-button color="primary" (click)="onRowClick(client)">Edit</button>
+        <button mat-raised-button color="warn" (click)="onDelete(client.id)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

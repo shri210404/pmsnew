@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* src/styles.css */
+.spacer {
+  flex: 1 1 auto;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.statistics-container {
+  width: 100%;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+body {
+  background: url('/assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.register-container {
+  background-color: rgba(255, 255, 255, 0.9);
+}

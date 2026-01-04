@@ -1,0 +1,215 @@
+.email-checker-container {
+  max-width: 1200px;
+  margin: 20px 5px;
+  
+
+  h6 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50; // Dark blue for heading
+    margin-bottom: 24px;
+  }
+
+  .status-message {
+    margin-top: 16px;
+    font-weight: bold;
+    color: #1976d2;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 16px; // Adds spacing between the search bar and the button
+  }
+
+  .search-bar {
+    flex: 1; // Allows the search bar to take up remaining space
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-infix {
+      border-top: 0;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+
+  .email-data-table {
+    margin-top: 24px;
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+
+      th {
+        background: #2c3e50;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        text-align: left;
+      }
+
+      td {
+        background: #f9f9f9;
+        padding: 12px;
+        color: #333;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      tr:hover td {
+        background: #f1f1f1;
+      }
+    }
+  }
+
+  button {
+    color: white;
+    background: linear-gradient(135deg, #fc6027, #fc6027);
+    transition: opacity 0.3s ease;
+    height: 45px; // Matches the height of the search bar
+    min-width: 80px; // Ensures the button has a consistent width
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1200px) {
+  .email-checker-container {
+    padding: 20px;
+
+    h6 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      gap: 12px; // Reduce gap between search bar and button
+    }
+
+    .email-data-table {
+      margin-top: 20px;
+
+      table {
+        th,
+        td {
+          padding: 10px; // Reduce padding for table cells
+        }
+      }
+    }
+
+    button {
+      height: 40px; // Adjust button height
+      min-width: 70px; // Adjust button width
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .email-checker-container {
+    padding: 16px;
+
+    h6 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    form {
+      flex-direction: column; // Stack search bar and button vertically
+      gap: 12px;
+    }
+
+    .search-bar {
+      width: 100%; // Full width for search bar
+    }
+
+    .email-data-table {
+      margin-top: 16px;
+
+      table {
+        th,
+        td {
+          padding: 8px; // Further reduce padding for table cells
+        }
+      }
+    }
+
+    button {
+      width: 100%; // Full width for button
+      height: 40px;
+      min-width: auto; // Allow button to take full width
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .email-checker-container {
+    padding: 12px;
+
+    h6 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    form {
+      gap: 8px; // Reduce gap between search bar and button
+    }
+
+    .email-data-table {
+      margin-top: 12px;
+
+      table {
+        th,
+        td {
+          padding: 6px; // Minimal padding for table cells
+        }
+      }
+    }
+
+    button {
+      height: 36px; // Adjust button height
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .email-checker-container {
+    padding: 8px;
+
+    h6 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    form {
+      gap: 6px; // Minimal gap between search bar and button
+    }
+
+    .email-data-table {
+      margin-top: 8px;
+
+      table {
+        th,
+        td {
+          padding: 4px; // Minimal padding for table cells
+        }
+      }
+    }
+
+    button {
+      height: 32px; // Adjust button height
+    }
+  }
+}

@@ -1,0 +1,93 @@
+<div class="template-management">
+  <h2>Template Management</h2>
+  
+
+  <!-- Dropdowns and Fields Section -->
+  <form [formGroup]="templateForm" (ngSubmit)="onArrowClick()">
+    <mat-form-field appearance="fill">
+      <mat-label>Client Name</mat-label>
+      <mat-select formControlName="client" required>
+        <mat-option *ngFor="let client of clients" [value]="client.clientName">{{ client.clientName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option *ngFor="let location of locations" [value]="location.countryName">{{ location.countryName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Template Name</mat-label>
+      <input matInput formControlName="templateName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Remarks</mat-label>
+      <textarea matInput formControlName="remarks"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="!templateForm.valid" type="submit">
+      <mat-icon>arrow_forward </mat-icon><p>Create Template </p>
+    </button>
+  </form>
+
+  <!-- Default Labels Section -->
+  <div *ngIf="showLabels">
+    <h3>Field Details</h3>
+    <div class="field-details-container">
+      <div *ngFor="let label of defaultLabels">{{ label.fieldName }}</div>
+    </div>
+
+    <!-- <button mat-raised-button color="accent" (click)="openCustomFieldModal()">Add Field</button> -->
+    <button mat-raised-button color="accent" (click)="saveTemplate()">Save</button>
+    <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+  </div>
+
+  <!-- Saved Templates Table Section -->
+  <h3>Saved Templates</h3>
+  <table mat-table [dataSource]="templates" class="mat-elevation-z8">
+    <!-- Template Name Column -->
+    <ng-container matColumnDef="templateName">
+      <th mat-header-cell *matHeaderCellDef> Template Name </th>
+      <td mat-cell *matCellDef="let template"> {{ template.templateName }} </td>
+    </ng-container>
+
+    <!-- Client Column -->
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef> Client </th>
+      <td mat-cell *matCellDef="let template"> {{ template.client }} </td>
+    </ng-container>
+
+    <!-- Location Column -->
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef> Location </th>
+      <td mat-cell *matCellDef="let template"> {{ template.location }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="remarks">
+      <th mat-header-cell *matHeaderCellDef> Remarks </th>
+      <td mat-cell *matCellDef="let template"> {{ template.remarks }} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let template">
+        <button mat-icon-button (click)="viewTemplate(template)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button (click)="editTemplate(template)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTemplate(template.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

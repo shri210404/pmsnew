@@ -1,0 +1,266 @@
+.form-container {
+  max-width: 1200px;
+  margin: 20px 5px ;
+
+  h6 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50; // Dark blue for heading
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 5px; // Space between form fields
+    margin-bottom: 2px; // Space between rows
+
+    mat-form-field {
+      flex: 1; // Each field takes equal width
+      background-color: #f9f9f9; // Light background for form fields
+      border-radius: 8px; // Rounded corners for form fields
+
+      .mat-form-field-wrapper {
+        border-radius: 8px; // Rounded corners for the wrapper
+      }
+
+      .mat-form-field-outline {
+        border-radius: 8px; // Rounded corners for the outline
+      }
+
+      .mat-input-element {
+        color: #333; // Text color
+      }
+
+      .mat-select-value {
+        color: #333; // Text color for select fields
+      }
+    }
+  }
+
+  .button-container {
+    display: flex;
+    gap: 12px; // Space between buttons
+    justify-content: flex-end; // Align buttons to the right
+
+    button {
+      border-radius: 8px; // Rounded corners for buttons
+      font-weight: 500;
+      text-transform: uppercase; // Uppercase text
+      padding: 8px 16px;
+      transition: background-color 0.3s ease; // Smooth hover effect
+
+      &[color="primary"] {
+        background: linear-gradient(135deg, #6a11cb, #2575fc); // Gradient background
+        color: white; // Text color
+      }
+
+      &[color="primary-reset"] {
+        background: linear-gradient(135deg, #a0a0a0, #a0a0a0); // Gradient background
+        color: white; // Text color
+      }
+
+      &[color="accent"] {
+        background: linear-gradient(135deg, #fc6607, #fc6607); // Gradient background
+        color: white; // Text color
+      }
+
+      &:hover {
+        opacity: 0.9; // Slight fade on hover
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    margin-top: 24px;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+
+    th {
+      background: #2c3e50;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      background: #f9f9f9;
+      padding: 12px;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:hover td {
+      background: #f1f1f1;
+    }
+
+    button.mat-raised-button {
+      color: white;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  mat-paginator {
+    margin-top: 16px;
+    border-radius: 8px;
+    background: #f9f9f9; // Light background for paginator
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1200px) {
+  .form-container {
+    margin: 20px 5px ;
+    padding: 20px;
+
+    h6 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      gap: 5px; // Space between form fields
+      margin-bottom: 2px; // Space between rows
+    }
+
+    .button-container {
+      gap: 10px;
+
+      button {
+        padding: 6px 12px;
+      }
+    }
+
+    table {
+      th,
+      td {
+        padding: 10px;
+      }
+    }
+
+    mat-paginator {
+      margin-top: 12px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .form-container {
+    margin: 20px 5px ;
+    padding: 16px;
+
+    h6 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      flex-wrap: wrap; // Allow form fields to wrap on smaller screens
+      gap: 5px; // Space between form fields
+      margin-bottom: 2px; // Space between rows
+
+      mat-form-field {
+        flex: 1 1 100%; // Full width for form fields on smaller screens
+      }
+    }
+
+    .button-container {
+      flex-wrap: wrap; // Allow buttons to wrap on smaller screens
+      gap: 8px;
+
+      button {
+        flex: 1 1 100%; // Full width for buttons on smaller screens
+        padding: 8px;
+      }
+    }
+
+    table {
+      th,
+      td {
+        padding: 8px;
+      }
+    }
+
+    mat-paginator {
+      margin-top: 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    margin: 20px 5px ;
+    padding: 12px;
+
+    h6 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .form-row {
+      gap: 5px; // Space between form fields
+      margin-bottom: 2px; // Space between rows
+    }
+
+    .button-container {
+      gap: 6px;
+
+      button {
+        padding: 6px;
+      }
+    }
+
+    table {
+      th,
+      td {
+        padding: 6px;
+      }
+    }
+
+    mat-paginator {
+      margin-top: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 8px;
+
+    h6 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .form-row {
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .button-container {
+      gap: 4px;
+
+      button {
+        padding: 4px;
+        font-size: 12px;
+      }
+    }
+
+    table {
+      th,
+      td {
+        padding: 4px;
+      }
+    }
+
+    mat-paginator {
+      margin-top: 6px;
+    }
+  }
+}

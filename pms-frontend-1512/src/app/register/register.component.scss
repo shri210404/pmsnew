@@ -1,0 +1,290 @@
+.register-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 2.5rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo {
+    max-width: 120px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  h6 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 1.25rem;
+
+    .mat-form-field-wrapper {
+      border-radius: 8px;
+      background: rgba(245, 245, 245, 0.8);
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: rgba(245, 245, 245, 1);
+      }
+    }
+
+    .mat-input-element {
+      color: #333;
+      font-size: 1rem;
+    }
+
+    .mat-form-field-label {
+      color: #666;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-outline {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .mat-error {
+      font-size: 0.85rem;
+      color: #ff4d4f;
+      margin-top: 0.25rem;
+    }
+  }
+
+  mat-checkbox {
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
+
+    .mat-error {
+      font-size: 0.85rem;
+      color: #ff4d4f;
+      margin-top: 0.25rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .sign-in-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }
+
+  p {
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+
+    b {
+      color: #333;
+      font-weight: 600;
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1200px) {
+  .register-container {
+    margin: 80px auto;
+    padding: 2rem;
+
+    .logo {
+      max-width: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    h6 {
+      font-size: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+
+    mat-form-field {
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 0.95rem;
+    }
+
+    .sign-in-link {
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    p {
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .register-container {
+    margin: 60px auto;
+    padding: 1.5rem;
+
+    .logo {
+      max-width: 90px;
+      margin-bottom: 1rem;
+    }
+
+    h6 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    mat-form-field {
+      margin-bottom: 0.75rem;
+    }
+
+    button {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+
+    .sign-in-link {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    margin: 40px auto;
+    padding: 1rem;
+
+    .logo {
+      max-width: 80px;
+      margin-bottom: 0.75rem;
+    }
+
+    h6 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    mat-form-field {
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      padding: 6px;
+      font-size: 0.85rem;
+    }
+
+    .sign-in-link {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+    }
+
+    p {
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    margin: 20px 5px;
+    padding: 0.75rem;
+
+    .logo {
+      max-width: 70px;
+      margin-bottom: 0.5rem;
+    }
+
+    h6 {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    mat-form-field {
+      margin-bottom: 0.25rem;
+    }
+
+    button {
+      padding: 4px;
+      font-size: 0.8rem;
+    }
+
+    .sign-in-link {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+    }
+
+    p {
+      margin-top: 0.5rem;
+      font-size: 0.65rem;
+    }
+  }
+}

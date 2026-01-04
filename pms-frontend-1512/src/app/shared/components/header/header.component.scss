@@ -1,0 +1,185 @@
+mat-toolbar {
+  background: linear-gradient(135deg, #fc6607, #fc6607); // Gradient background
+  color: black; // Text color
+  padding: 0 16px; // Padding for the toolbar
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo {
+    height: 60px; // Logo height
+    margin-right: 16px; // Space between logo and menu button
+    transition: transform 0.3s ease; // Smooth hover effect
+
+    &:hover {
+      transform: scale(1.05); // Slightly enlarge logo on hover
+    }
+  }
+
+  button.mat-icon-button {
+    color: black; // Icon color
+    transition: background-color 0.3s ease; // Smooth hover effect
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1); // Light hover effect
+    }
+
+    mat-icon {
+      font-size: 24px; // Icon size
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto; // Pushes elements to the sides
+  }
+
+  button[mat-button] {
+    display: flex;
+    align-items: center;
+    gap: 8px; // Space between icon and text
+    color: black; // Text color
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase; // Uppercase text
+    transition: background-color 0.3s ease; // Smooth hover effect
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1); // Light hover effect
+    }
+
+    mat-icon {
+      font-size: 24px; // Icon size
+    }
+  }
+
+  mat-menu {
+    background: black; // Menu background
+    border-radius: 8px; // Rounded corners
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Subtle shadow
+
+    button.mat-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px; // Space between icon and text
+      color: #333; // Text color
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.3s ease; // Smooth hover effect
+
+      &:hover {
+        background-color: black; // Light hover effect
+      }
+
+      mat-icon {
+        color: #2575fc; // Icon color
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1200px) {
+  mat-toolbar {
+    padding: 0 12px;
+
+    .logo {
+      height: 50px; // Reduce logo size
+      margin-right: 12px;
+    }
+
+    button[mat-button] {
+      font-size: 13px; // Reduce font size
+      gap: 6px; // Reduce gap between icon and text
+
+      mat-icon {
+        font-size: 20px; // Reduce icon size
+      }
+    }
+
+    button.mat-icon-button {
+      mat-icon {
+        font-size: 20px; // Reduce icon size
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  mat-toolbar {
+    padding: 0 10px;
+
+    .logo {
+      height: 45px; // Further reduce logo size
+      margin-right: 10px;
+    }
+
+    button[mat-button] {
+      font-size: 12px; // Further reduce font size
+      gap: 4px; // Further reduce gap between icon and text
+
+      mat-icon {
+        font-size: 18px; // Further reduce icon size
+      }
+    }
+
+    button.mat-icon-button {
+      mat-icon {
+        font-size: 18px; // Further reduce icon size
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  mat-toolbar {
+    padding: 0 8px;
+
+    .logo {
+      height: 40px; // Smaller logo for tablets
+      margin-right: 8px;
+    }
+
+    button[mat-button] {
+      font-size: 11px; // Smaller font size for tablets
+      gap: 4px;
+
+      mat-icon {
+        font-size: 16px; // Smaller icon size for tablets
+      }
+    }
+
+    button.mat-icon-button {
+      mat-icon {
+        font-size: 16px; // Smaller icon size for tablets
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  mat-toolbar {
+    padding: 0 6px;
+
+    .logo {
+      height: 35px; // Smallest logo for mobile devices
+      margin-right: 6px;
+    }
+
+    button[mat-button] {
+      font-size: 10px; // Smallest font size for mobile devices
+      gap: 4px;
+
+      mat-icon {
+        font-size: 14px; // Smallest icon size for mobile devices
+      }
+    }
+
+    button.mat-icon-button {
+      mat-icon {
+        font-size: 14px; // Smallest icon size for mobile devices
+      }
+    }
+  }
+}

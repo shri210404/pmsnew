@@ -1,0 +1,18 @@
+<div class="dashboard-tile-card">
+    <span [ngClass]="['card-ico', bgClass]">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="ico"></mat-icon>
+    </span>
+    <div class="text-right">
+        <h5>{{ title }}</h5>
+        @if (!activityFeed) {
+            <h4>{{ displayValue }}</h4>
+        }
+    </div>
+    @if (!activityFeed) {
+    <!-- <p> Get more Details</p> -->
+    } @else {
+        @for (item of getActivityFeedItems(); track $index) {
+            <p><b>{{ item.key }}: {{ item.value }}</b></p>
+        }
+    }
+</div>

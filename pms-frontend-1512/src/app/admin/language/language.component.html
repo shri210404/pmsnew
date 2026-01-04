@@ -1,0 +1,36 @@
+<div class="roles-container">
+  <h6>Language</h6>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Language Name</mat-label>
+    <input matInput placeholder="Enter Language Name" [(ngModel)]="languageName" />
+  </mat-form-field>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+  </div>
+
+  <h6>Language List</h6>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="languageName">
+        <th mat-header-cell *matHeaderCellDef> Language Name </th>
+        <td mat-cell *matCellDef="let client"> {{ client.languageName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let role">   
+          <button mat-raised-button color="primary" (click)="onRowClick(role)">Edit</button>
+          <button mat-raised-button color="warn" (click)="onDelete(role.id)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Paginator -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

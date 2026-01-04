@@ -1,0 +1,43 @@
+<div class="roles-container">
+    <h6>Country</h6>
+  
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Country Name</mat-label>
+      <input matInput placeholder="Enter Role Name" [(ngModel)]="countryName" />
+    </mat-form-field>
+
+  
+    <div class="button-group">
+      <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+      <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+    </div>
+  
+    <h6>Country List</h6>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" editable>
+      
+  
+        <ng-container matColumnDef="countryName">
+          <th mat-header-cell *matHeaderCellDef> Client Name </th>
+          <td mat-cell *matCellDef="let client"> {{ client.countryName }} </td>
+        </ng-container>
+  
+        
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let role">   
+            <button mat-raised-button color="primary" (click)="onRowClick(role)">Edit</button>
+            <button mat-raised-button color="warn" (click)="onDelete(role.id)">Delete</button>
+          </td>
+        </ng-container>
+  
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+  </div>
+  

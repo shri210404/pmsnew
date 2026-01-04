@@ -1,0 +1,265 @@
+<div class="form-container">
+  <h5>{{ mode === 'add' ? 'Add New Profile' : 'Edit Profile' }}</h5>
+
+  <form class="submit-form" [formGroup]="profileForm">
+    <div class="profile-details-section">
+    <p>Profile Details</p>
+    <!-- Name and Client -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="candidateName" />
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Client</mat-label>
+        <mat-select formControlName="clientName">
+          <mat-option *ngFor="let client of clients" [value]="client.clientName">
+            {{ client.clientName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Job Order -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Job Order</mat-label>
+        <mat-select formControlName="jobOrderId" [disabled]="!profileForm.get('clientName')?.value || mode === 'view'">
+          <mat-option *ngIf="filteredJobOrders.length === 0 && profileForm.get('clientName')?.value" value="">
+            No job orders available for this client
+          </mat-option>
+          <mat-option *ngIf="!profileForm.get('clientName')?.value" value="">
+            Please select a client first
+          </mat-option>
+          <mat-option *ngFor="let jobOrder of filteredJobOrders" [value]="jobOrder.id">
+            {{ jobOrder.jobId }} - {{ jobOrder.jobTitle }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Location and Email -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let location of locations" [value]="location.countryName">
+            {{ location.countryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+    </div>
+
+    <!-- Role and Nationality -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Role</mat-label>
+        <input matInput formControlName="roleApplied" />
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Nationality</mat-label>
+        <mat-select formControlName="nationality">
+          <mat-option *ngFor="let location of locations" [value]="location.countryName">
+            {{ location.countryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Job Language and Language Level -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Job Language</mat-label>
+        <mat-select formControlName="jobLanguage">
+          <mat-option *ngFor="let language of language" [value]="language.languageName">
+            {{ language.languageName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Language Level</mat-label>
+        <input type ="text"matInput formControlName="educationLevel" />
+      </mat-form-field>
+    </div>
+
+    <!-- Salary Currency and Current Salary -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Salary Currency</mat-label>
+        <mat-select formControlName="salaryCurrency">
+          <mat-option *ngFor="let currency of currency" [value]="currency.currencyName">
+            {{ currency.currencyName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Current Salary</mat-label>
+        <input matInput formControlName="currentSalary" />
+      </mat-form-field>
+    </div>
+
+    <!-- Contact and Notice Period -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Contact</mat-label>
+        <input type="text" matInput formControlName="contact" />
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Notice Period (Days)</mat-label>
+        <input matInput formControlName="noticePeriod" />
+      </mat-form-field>
+    </div>
+
+    <!-- Native Language and Submitted Status -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Native Language</mat-label>
+        <mat-select formControlName="nativeLanguage">
+          <mat-option *ngFor="let language of language" [value]="language.languageName">
+            {{ language.languageName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Submitted Status</mat-label>
+        <mat-select formControlName="submittedStatus" (selectionChange)="onStatusChange($event.value)">
+          <mat-option *ngFor="let status of submittedStatus" [value]="status.value">
+            {{ status.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    </div>
+    </div>
+    <div class="dates-section">
+    <p>Dates </p>
+    <!-- Proposal Date and Selection Date -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Proposal Date</mat-label>
+        <input matInput [matDatepicker]="picker0" [(ngModel)]="proposalDate" formControlName="proposalDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker0"></mat-datepicker-toggle>
+        <mat-datepicker #picker0></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Selection Date</mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="selectionDate" formControlName="selectionDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Joining Date and Rejection/Dropped Date -->
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Joining Date</mat-label>
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="joiningDate" formControlName="joiningDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <mat-label>Dropped/Rejection Date</mat-label>
+        <input matInput [matDatepicker]="picker5" [(ngModel)]="rejection_dropped_Date" formControlName="rejection_dropped_Date" />
+        <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+        <mat-datepicker #picker5></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="remarks-section">
+    <p>Remarks and Resume</p>
+    <div class="form-row">
+      <mat-form-field  class="form-field">
+        <mat-label>Remarks</mat-label>
+        <input matInput formControlName="remarks" />
+      </mat-form-field>
+    
+      <ng-container>
+        <div class="attachment-field">
+          <mat-form-field  class="form-width">
+            <mat-label>Resume</mat-label>
+            <input matInput [value]="attachmentFileName" disabled />
+          </mat-form-field>
+    
+          <!-- Download Icon (Visible only when attachmentFileName has a value) -->
+          <span *ngIf="attachmentFileName" class="download-container" (click)="onDownload(attachmentFileName)" title="Download File">
+            <mat-icon class="download-icon">file_download</mat-icon>
+            Download File
+          </span>
+    
+          <input type="file" (change)="onFileChange($event)" />
+        </div>
+      </ng-container>
+    </div>
+    </div>
+
+    <div class="billing-section" *ngIf="isSubmit && isBusinessHead || HRM">
+      <p>Billing Details</p>
+  
+      <!-- Billing Amount and Billing Currency (Conditional) -->
+      <div *ngIf="isSubmit && isBusinessHead" class="form-row">
+        <mat-form-field  class="form-field">
+          <mat-label>Billing Amount</mat-label>
+          <input matInput formControlName="billingNo" />
+        </mat-form-field>
+  
+        <mat-form-field  class="form-field">
+          <mat-label>Billing Currency</mat-label>
+          <mat-select formControlName="billingCurrency">
+            <mat-option *ngFor="let currency of currency" [value]="currency.currencyName">
+              {{ currency.currencyName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <!-- Invoice No and Invoice Date (Conditional) -->
+      <div *ngIf="isSubmit && (isBusinessHead || HRM)" class="form-row">
+        <mat-form-field  class="form-field">
+          <mat-label>Invoice No</mat-label>
+          <input matInput formControlName="invoiceNo" />
+        </mat-form-field>
+  
+        <mat-form-field  class="form-field">
+          <mat-label>Invoice Date</mat-label>
+          <input matInput [matDatepicker]="picker3" [(ngModel)]="invoiceDate" formControlName="invoiceDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="onSave()" 
+        [disabled]="mode === 'view' || isSubmitting">
+        <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+        <span *ngIf="!isSubmitting">{{ mode === 'edit' ? 'Update' : 'ADD PROFILE' }}</span>
+      </button>
+    
+      <button 
+        mat-button 
+        color="accent" 
+        (click)="onCancel($event)" 
+        [disabled]="isSubmitting">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,57 @@
+.dashboard-tile-card {
+  padding: 15px 20px;
+  box-shadow: 1px 1px 11px 0 rgba(0, 0, 0, .12);
+  width: 100%;
+  position: relative;
+
+  &:hover .card-ico {
+    top: -17px;
+  }
+
+  .card-ico {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.2s ease-out;
+
+    .mat-icon {
+      color: #fff;
+      line-height: 36px;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .bg-orange {
+    background: #ff9c44;
+  }
+
+  .bg-blue {
+    background: #4680ff;
+  }
+
+  .bg-maroon {
+    background: #fc6180;
+  }
+
+  .bg-green {
+    background: #93be52;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+
+  h4 {
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 300;
+  }
+}

@@ -1,0 +1,228 @@
+.login-container {
+  background: url('/assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+
+  .login-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      max-width: 120px;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 1.25rem;
+
+      .mat-form-field-wrapper {
+        border-radius: 8px;
+        background: rgba(245, 245, 245, 0.8);
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: rgba(245, 245, 245, 1);
+        }
+      }
+
+      .mat-input-element {
+        color: #333;
+        font-size: 1rem;
+      }
+
+      .mat-form-field-label {
+        color: #666;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
+
+      .mat-form-field-outline {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.5rem 0;
+
+      .mat-checkbox {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .forgot-password {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #0056b3;
+        }
+      }
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+
+      .sign-in-button,
+      .register-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 8px;
+        color: white;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      .sign-in-button {
+        background-color: #007bff;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+
+      .register-button {
+        background-color: #28a745;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
+    }
+
+    p {
+      margin-top: 1.5rem;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+
+      strong {
+        color: #333;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .login-container {
+    .login-box {
+      padding: 1.5rem;
+
+      .logo {
+        max-width: 100px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      mat-form-field {
+        margin-bottom: 1rem;
+      }
+
+      .options {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .button-container {
+        gap: 0.75rem;
+
+        .sign-in-button,
+        .register-button {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    .login-box {
+      padding: 1rem;
+
+      .logo {
+        max-width: 80px;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      mat-form-field {
+        margin-bottom: 0.75rem;
+      }
+
+      .options {
+        gap: 0.5rem;
+      }
+
+      .button-container {
+        gap: 0.5rem;
+
+        .sign-in-button,
+        .register-button {
+          padding: 8px;
+          font-size: 0.8rem;
+        }
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

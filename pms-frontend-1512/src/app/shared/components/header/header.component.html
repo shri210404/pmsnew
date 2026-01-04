@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <span><img src="assets/logo.png" alt="Logo" class="logo"></span>
+
+  <button mat-icon-button (click)="toggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+    <strong>{{ accountDetails?.name }}</strong> ({{ accountDetails?.username }})
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="profile()">
+      <mat-icon>group</mat-icon>
+      <span>Profile</span>
+    </button>
+
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+   
+  </mat-menu>
+</mat-toolbar>

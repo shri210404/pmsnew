@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'View' }} Template</h2>
+<mat-dialog-content>
+  <div *ngIf="data.template">
+    <mat-form-field appearance="fill">
+      <mat-label>Template Name</mat-label>
+      <input matInput [value]="data.template.templateName" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Client</mat-label>
+      <input matInput [value]="data.template.client" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Location</mat-label>
+      <input matInput [value]="data.template.location" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Remarks</mat-label>
+      <textarea matInput [value]="data.template.remarks" readonly></textarea>
+    </mat-form-field>
+
+    <div *ngIf="data.template.fields && data.template.fields.length > 0">
+      <h3>Field Details</h3>
+      <mat-list>
+        <mat-list-item *ngFor="let field of data.template.fields">
+          {{ field.fieldName }} ({{ field.fieldType }})
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <ng-container *ngIf="isEditMode">
+    <!-- <button mat-button color="primary" (click)="addField()">Add Field</button> -->
+    <button mat-button color="primary" (click)="save()">Save</button>
+  </ng-container>
+  <button mat-button color="warn" (click)="close()">Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,73 @@
+<div class="user-roles-form-container">
+    <h6>User Role</h6>
+    <form [formGroup]="userRoleForm">
+      <!-- <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required />
+      </mat-form-field> -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Username </mat-label>
+        <mat-select formControlName="username" required>
+          <mat-option *ngFor="let report of reportsToList" [value]="report.username">{{ report.email  }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="roleId" required>
+          <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.roleName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Reports To</mat-label>
+        <mat-select formControlName="reportsTo" required>
+          <mat-option *ngFor="let report of reportsToList" [value]="report.id">{{ report.email  }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <div class="button-group">
+        <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+        <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  
+    <h6>User Roles List</h6>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Username</th>
+        <td mat-cell *matCellDef="let userRole">{{ userRole.username }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="roleId">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let userRole">{{ userRole.role.roleName }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="reportsTo">
+        <th mat-header-cell *matHeaderCellDef>Reports To</th>
+        <td mat-cell *matCellDef="let userRole">{{ userRole.managerDetails.firstName + " " + userRole.managerDetails.lastName }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let userRole">
+          <button mat-icon-button color="primary" (click)="onEdit(userRole)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+  </div>
+  

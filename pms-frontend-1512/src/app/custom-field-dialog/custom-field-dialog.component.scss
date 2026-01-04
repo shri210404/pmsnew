@@ -1,0 +1,17 @@
+::ng-deep .mat-dialog-content {
+  padding: 16px;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 24px;
+}
+
+::ng-deep .mat-dialog-actions button {
+  margin-left: 8px;
+}

@@ -1,0 +1,37 @@
+<mat-dialog-content>
+  <h4>{{ mode === 'view' ? 'View Proposal Details' : 'Edit Proposal Details' }}</h4>
+
+  <form [formGroup]="proposalForm" class="proposal-form">
+    <div class="form-container">
+      <!-- Loop through each control in the form and render fields -->
+      <div *ngFor="let key of proposalForm.controls | keyvalue" class="form-item">
+        
+        <!-- Handle normal input fields -->
+        <mat-form-field appearance="fill" class="full-width" *ngIf="key.key !== 'attachment'">
+          <mat-label>{{ key.key | titlecase }}</mat-label>
+          <input matInput [formControlName]="key.key" [readonly]="mode === 'view'" />
+        </mat-form-field>
+        
+        <!-- Special case for attachment field -->
+        <ng-container *ngIf="key.key === 'attachment'">
+          <div class="attachment-field">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>{{ key.key | titlecase }}</mat-label>
+              <!-- Display the current file name if there is one -->
+              <input matInput [value]="attachmentFileName" disabled />
+            </mat-form-field>
+
+            <!-- Allow user to upload a new file only in edit mode -->
+            <input *ngIf="mode === 'edit'" type="file" (change)="onFileChange($event)" />
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onCancel()" type="button">Close</button>
+  <button *ngIf="mode === 'edit'" mat-raised-button color="primary" (click)="onSave()" type="button">Save</button>
+</mat-dialog-actions>

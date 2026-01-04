@@ -1,0 +1,53 @@
+<div class="roles-container">
+  <h6>Roles</h6>
+  <form>
+      <!-- Role Name Field -->
+      <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role Name</mat-label>
+          <input matInput placeholder="Enter Role Name" [(ngModel)]="roleName" name="roleName" />
+      </mat-form-field>
+
+      <!-- Short Role Name Field -->
+      <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Short Role Name</mat-label>
+          <input matInput placeholder="Enter Short Role Name" [(ngModel)]="shortRoleName" name="shortRoleName" />
+      </mat-form-field>
+
+      <!-- Button Group -->
+      <div class="button-group">
+          <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+          <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+      </div>
+  </form>
+
+  <!-- Roles List -->
+  <h6>Roles List</h6>
+  <table mat-table [dataSource]="roles" class="mat-elevation-z8">
+      <!-- Role Name Column -->
+      <ng-container matColumnDef="rolename">
+          <th mat-header-cell *matHeaderCellDef> Role Name </th>
+          <td mat-cell *matCellDef="let role"> {{ role.roleName }} </td>
+      </ng-container>
+
+      <!-- Short Role Name Column -->
+      <ng-container matColumnDef="shortRoleName">
+          <th mat-header-cell *matHeaderCellDef> Short Name </th>
+          <td mat-cell *matCellDef="let role"> {{ role.shortRoleName }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let role">
+              <button mat-raised-button color="primary" (click)="onRowClick(role)">Edit</button>
+              <!-- Uncomment if you want a delete button -->
+              <!-- <button mat-raised-button color="warn" (click)="onDelete(role.id)">Delete</button> -->
+          </td>
+      </ng-container>
+
+      <!-- Header and Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

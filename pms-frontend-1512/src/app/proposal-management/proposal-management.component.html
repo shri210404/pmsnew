@@ -1,0 +1,247 @@
+<div class="container">
+  <h6>Submit New Candiate Profile</h6>
+
+  <!-- Template Dropdown -->
+  <div class="template-row">
+    <!-- Template Dropdown -->
+    <mat-form-field appearance="fill">
+      <mat-label>Select Template</mat-label>
+      <mat-select (selectionChange)="onTemplateChange($event.value)">
+        <mat-option *ngFor="let template of templates" [value]="template">
+          {{ template.templateName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Show Listing Button -->
+    <button *ngIf="hideListing" mat-raised-button color="primary" (click)="showListing()">Show Listing</button>
+  </div>
+
+
+
+  <!-- Details only visible when a template is selected -->
+  <div *ngIf="showDetails">
+    <mat-form-field appearance="fill">
+      <mat-label>Client Name</mat-label>
+      <input matInput [value]="selectedTemplate.client" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Location</mat-label>
+      <input matInput [value]="selectedTemplate.location" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Remarks</mat-label>
+      <input matInput [value]="selectedTemplate.remarks" readonly />
+    </mat-form-field>
+
+    <!-- Dynamic Fields from Template -->
+    <h5>Candidate Details</h5>
+   <form [formGroup]="proposalForm" class="container">
+  <mat-tab-group animationDuration="0ms">
+    <!-- Personal Information Tab -->
+    <mat-tab label="Personal Information">
+      <div class="form-row">
+        <div *ngFor="let field of groupedFields.personalInformation" class="form-field">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ field.fieldName }}</mat-label>
+            <ng-container *ngIf="field.formControlName === 'submittedStatus'; else inputField">
+              <mat-select [formControlName]="field.formControlName">
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </ng-container>
+            <ng-template #inputField>
+              <input matInput [formControlName]="field.formControlName" [type]="field.fieldType" />
+            </ng-template>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Job Details Tab -->
+    <mat-tab label="Job Details">
+      <div class="form-row">
+        <div *ngFor="let field of groupedFields.jobDetails" class="form-field">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ field.fieldName }}</mat-label>
+            <input matInput [formControlName]="field.formControlName" [type]="field.fieldType" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Skills Tab -->
+    <mat-tab label="Skills">
+      <div class="form-row">
+        <div *ngFor="let field of groupedFields.skills" class="form-field">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ field.fieldName }}</mat-label>
+            <ng-container *ngIf="field.formControlName === 'submittedStatus'; else inputField">
+              <mat-select [formControlName]="field.formControlName">
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </ng-container>
+            <ng-template #inputField>
+              <input matInput [formControlName]="field.formControlName" [type]="field.fieldType" />
+            </ng-template>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Salary & Employment Tab -->
+    <mat-tab label="Salary & Employment">
+      <div class="form-row">
+        <div *ngFor="let field of groupedFields.salaryAndEmployment" class="form-field">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ field.fieldName }}</mat-label>
+            <ng-container *ngIf="field.formControlName === 'submittedStatus'; else inputField">
+              <mat-select [formControlName]="field.formControlName">
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </ng-container>
+            <ng-template #inputField>
+              <input matInput [formControlName]="field.formControlName" [type]="field.fieldType" />
+            </ng-template>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Others Tab -->
+    <mat-tab label="Others">
+      <div class="form-row">
+        <div *ngFor="let field of groupedFields.others" class="form-field">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ field.fieldName }}</mat-label>
+            <ng-container *ngIf="field.formControlName === 'submittedStatus'; else inputField">
+              <mat-select [formControlName]="field.formControlName">
+                <mat-option *ngFor="let option of statusOptions" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </ng-container>
+            <ng-template #inputField>
+              <input matInput [formControlName]="field.formControlName" [type]="field.fieldType" />
+            </ng-template>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <!-- File Attachment Section -->
+  <div class="form-row">
+    <label for="file">Upload Attachment</label>
+    <input type="file" id="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" />
+    <p class="instructions">
+      Allowed file types: PDF, Word (.doc, .docx). Max file size: 2 MB.
+    </p>
+    <p class="validation-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Proposed To Dropdown -->
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Proposed To</mat-label>
+      <mat-select [(value)]="proposedTo" required>
+        <mat-option *ngFor="let user of userRole" [value]="user.id">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Submit and Cancel Buttons -->
+  <div class="form-actions">
+    <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!proposalForm.valid">Submit</button>
+  </div>
+</form>
+  </div>
+
+  <!-- Proposals Table -->
+  <div *ngIf="loadProposal.length && !hideListing">
+    <table mat-table [dataSource]="loadProposal" class="mat-elevation-z8" editable>
+
+      <ng-container matColumnDef="candidateName">
+        <th mat-header-cell *matHeaderCellDef> Candidate Name </th>
+        <td mat-cell *matCellDef="let proposal"> {{ proposal.candidateName }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="clientName">
+        <th mat-header-cell *matHeaderCellDef> Client Name </th>
+        <td mat-cell *matCellDef="let proposal">
+          <input matInput [(ngModel)]="proposal.clientName" [disabled]="!proposal.isEdit" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef> Location </th>
+        <td mat-cell *matCellDef="let proposal">
+          <input matInput [(ngModel)]="proposal.location" [disabled]="!proposal.isEdit" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="remarks">
+        <th mat-header-cell *matHeaderCellDef> Remarks </th>
+        <td mat-cell *matCellDef="let proposal">
+          <input matInput [(ngModel)]="proposal.remarks" [disabled]="!proposal.isEdit" />
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let proposal" (click)="$event.stopPropagation()">
+          <button 
+            mat-icon-button 
+            color="primary" 
+            (click)="onView(proposal, $event); false"
+            (mousedown)="$event.preventDefault(); $event.stopPropagation()"
+            title="View"
+            type="button">
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <button 
+            *ngIf="!proposal.isEdit" 
+            mat-icon-button 
+            color="accent" 
+            (click)="onEdit(proposal, $event); false"
+            (mousedown)="$event.preventDefault(); $event.stopPropagation()"
+            title="Edit"
+            type="button">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button 
+            *ngIf="proposal.isEdit" 
+            mat-icon-button 
+            color="primary" 
+            (click)="onSave(proposal, $event)"
+            title="Save">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button 
+            mat-icon-button 
+            color="warn" 
+            (click)="onDelete(proposal.id, $event)"
+            title="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="roles-container">
+  <h6>Currency</h6>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Currency Name</mat-label>
+    <input matInput placeholder="Enter Currency Name" [(ngModel)]="currencyName" />
+  </mat-form-field>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+  </div>
+
+  <h6>Currency List</h6>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="currencyName">
+      <th mat-header-cell *matHeaderCellDef> Currency Name </th>
+      <td mat-cell *matCellDef="let currency"> {{ currency.currencyName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let currency">
+        <button mat-raised-button color="primary" (click)="onRowClick(currency)">Edit</button>
+        <button mat-raised-button color="warn" (click)="onDelete(currency.id)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Add paginator -->
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

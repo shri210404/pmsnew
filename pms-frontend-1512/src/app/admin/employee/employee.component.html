@@ -1,0 +1,78 @@
+  <div class="employee-form-container">
+    <h6>Employee</h6>
+    <form [formGroup]="employeeForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Employee Id</mat-label>
+            <input matInput formControlName="employeeId" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required />
+        </mat-form-field>
+
+        <!-- Add more fields as needed -->
+
+        <div class="button-container">
+            <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+            <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+
+    <h6>Employee List</h6>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Table content remains the same -->
+        <ng-container matColumnDef="employeeId">
+          <th mat-header-cell *matHeaderCellDef>Employee ID</th>
+          <td mat-cell *matCellDef="let employee">{{ employee.employeeId }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let employee">{{ employee.username }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let employee">{{ employee.email }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef>First Name</th>
+          <td mat-cell *matCellDef="let employee">{{ employee.firstName }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef>Last Name</th>
+          <td mat-cell *matCellDef="let employee">{{ employee.lastName }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let employee">
+            <button mat-icon-button color="primary" (click)="onEdit(employee)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

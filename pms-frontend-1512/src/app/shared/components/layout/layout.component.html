@@ -1,0 +1,16 @@
+<app-header [isExpanded]="sidebarExpanded" (onToggle)="toggleSidebar($event)"></app-header>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav 
+        mode="side"
+        class="sidenav"
+        [opened]="sidebarExpanded"
+        [fixedInViewport]="false"
+        [fixedTopGap]="64"
+        [fixedBottomGap]="0"
+    >
+        <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
